@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Transactions Page</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+	<link rel="stylesheet" href="styles/style.css" /> </head>
+
+<body>
+	<!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+	<header>
+		<div class="container-fluid">
+			<h1>I SMART
+                <aside class="available-amount"> Available Amount : <span class="totalAmount">5000</span></aside>
+            </h1>
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark"></nav>
+		</div>
+	</header>
+	<!-- Begin page content -->
+	<main role="main" class="container-fluid mt-5">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-header text-white bg-dark"> Make / Receive Payments </div>
+					<div class="card-body">
+						<form name="paymentForm" id="paymentForm" onsubmit="return validateForm()" method="post">
+							<div class="form-group row">
+								<label for="formAmount" class="col-sm-5 col-form-label">Amount</label>
+								<div class="col-sm-7">
+									<input type="number" class="form-control" name="formAmount" id="formAmount" required /> </div>
+							</div>
+							<div class="form-group row">
+								<label for="formDate" class="col-sm-5 col-form-label">Date</label>
+								<div class="col-sm-7">
+									<input type="date" class="form-control" id="formDate" required /> </div>
+							</div>
+							<div class="form-group row">
+								<label for="formPayType" class="col-sm-5 col-form-label">Payment Type</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="formPayType">
+										<option value="D">Make Payment</option>
+										<option value="C">Receive Payment</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="formCategory" class="col-sm-5 col-form-label">Category</label>
+								<div class="col-sm-7">
+									<select class="form-control" id="formCategory">
+										<option>Shopping</option>
+										<option>Medical</option>
+										<option>Grocery</option>
+										<option>Travel</option>
+										<option>Loan</option>
+										<option>Utility Bills</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="formDes" class="col-sm-5 col-form-label">Description</label>
+								<div class="col-sm-7">
+                                        <input type="text" class="form-control" id="formDes" required />
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<div class="card-header text-white bg-dark"> View Transactions </div>
+					<div class="card-body">
+						<form class="form-inline" onsubmit="return transactionForm()">
+							<div class="form-group col-md-3">
+								<label for="inputPassword" class="col-sm-4 col-form-label">Frequency</label>
+								<div class="col-sm-8">
+                                        <select class="form-control w-100" onchange="handleFrequency()" id="frequency">
+                                                <option>Monthly</option>
+                                                <option>Current</option>
+                                            </select> </div>
+							</div>
+							<div class="form-group col-md-3 checkFrequency">
+								<label for="inputPassword" class="col-sm-4 col-form-label">Month</label>
+								<div class="col-sm-8">
+									<select class="form-control w-100 monthlyTransaction">
+									</select>
+								</div>
+							</div>
+							<div class="form-group col-md-4 checkFrequency">
+								<label for="transCategory" class="col-sm-4 col-form-label">Category</label>
+								<div class="col-sm-8">
+									<select class="form-control w-100" id="transCategory">
+										<option>Shopping</option>
+										<option>Medical</option>
+										<option>Grocery</option>
+										<option>Travel</option>
+										<option>Loan</option>
+										<option>Utility Bills</option>
+									</select>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary mb-2"> Search </button>
+						</form>
+					</div>
+				</div>
+				<div class="row mt-3 transArea" id="setTransArea">
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header text-white bg-dark"> Expenditure </div>
+							<div class="card-body exp-grid">
+								<table class="table" id="expTable">
+									<thead>
+										<tr>
+											<th scope="col">Month</th>
+											<th scope="col">Desc</th>
+											<th scope="col">Category</th>
+											<th scope="col">Amount</th>
+											<th scope="col">D/C</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card">
+							<div class="card-header text-white bg-dark"> Spend Analysis </div>
+							<div class="card-body chartbox">
+								<canvas id="pieChart" style="max-width: 500px;"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Begin footer -->
+	<footer class="footer">
+		<div class="container-fluid"> Footer </div>
+	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" defer></script>
+	<script src="js/code.js" defer></script>
+</body>
+
+</html>
